@@ -31,13 +31,15 @@ int set_fan_level(int level) {
         printf('failed to open /proc/acpi/ibm/fan (no file descriptor for u bich)')
 
         return -1;
-        
+
     }
     char buf[16];
     
     int len = snprintf(buf, sizeof(buf), "level %d\n", level);
     
     ssize_t written = write(fd, buf, len);
+
+    close(fd);
     
     return (written == len) ? 0 : -1;
 }
