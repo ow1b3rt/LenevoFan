@@ -19,11 +19,29 @@
 #define HANDLE_W 18
 #define HANDLE_H 34
 
+
 int set_fan_level(int level) {
+    
+    if (level < 0 || level > 7) return -1;
+    
+    int fd = open("/proc/acpi/ibm/fan", O_WRONLY);
+    
+    if (fd == -1) { 
 
-    return level;
+        printf('failed to open /proc/acpi/ibm/fan (no file descriptor for u bich)')
 
+        return -1;
+        
+    }
+    char buf[16];
+    
+    int len = snprintf(buf, sizeof(buf), "level %d\n", level);
+    
+    ssize_t written = write(fd, buf, len);
+    
+    return (written == len) ? 0 : -1;
 }
+
 
 static int level_to_x(int level) {
     
