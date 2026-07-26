@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+sudo apt install libsdl2-dev
+
 set -euo pipefail
 
 MODULE="thinkpad_acpi"
